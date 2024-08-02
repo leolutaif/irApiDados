@@ -8,17 +8,8 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 // Configure CORS
-const allowedOrigins = ['http://localhost:3000'];
 app.use(cors({
-  origin: (origin, callback) => {
-    // Permite solicitações sem origem (como Postman ou cURL)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*', // Permitir todas as origens
   credentials: true, // Se você estiver usando cookies ou autenticação baseada em sessão
 }));
 
