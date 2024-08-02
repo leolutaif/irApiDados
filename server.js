@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Middleware para analisar o corpo das solicitações em JSON
 app.use(bodyParser.json());
 
-// Configure CORS
+// Configuração do CORS para permitir todas as origens
 app.use(cors({
   origin: '*', // Permitir todas as origens
   credentials: true, // Se você estiver usando cookies ou autenticação baseada em sessão
@@ -29,11 +30,13 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// Rota para obter todos os usuários
 app.get('/users', async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
 
+// Rota para criar um novo usuário
 app.post('/users', async (req, res) => {
   const users = await User.find();
   const newUser = req.body;
@@ -45,6 +48,7 @@ app.post('/users', async (req, res) => {
   res.status(201).json(newUser);
 });
 
+// Rota para atualizar um usuário existente
 app.put('/users/:id', async (req, res) => {
   const userId = parseInt(req.params.id, 10);
   const updatedUser = req.body;
@@ -58,6 +62,7 @@ app.put('/users/:id', async (req, res) => {
   }
 });
 
+// Rota para deletar um usuário
 app.delete('/users/:id', async (req, res) => {
   const userId = parseInt(req.params.id, 10);
 
@@ -70,15 +75,17 @@ app.delete('/users/:id', async (req, res) => {
   }
 });
 
+// Rota para verificar a senha
 app.post('/verify-password', (req, res) => {
   const { password } = req.body;
-  if (verifyPassword(password)) {
+  if (verifyPassword(password)) { // Certifique-se de que a função verifyPassword está definida em algum lugar
     res.json({ success: true });
   } else {
     res.status(401).json({ success: false, message: 'Incorrect password' });
   }
 });
 
+// Inicia o servidor na porta especificada
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
