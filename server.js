@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 // Configure CORS para aceitar qualquer origem
 app.use(cors({
-  origin: '*', // Aceita qualquer origem
+  origin: 'http://localhost:3000', // Permitir somente a origem da porta 3000
   credentials: true, // Permitir credenciais (cookies, cabeçalhos de autenticação, etc.)
 }));
 
@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   id: Number,
   name: String,
   email: String,
+  createdAt: { type: Date, default: Date.now },
   // Adicione outros campos conforme necessário
 });
 
