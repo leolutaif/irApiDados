@@ -12,13 +12,13 @@ app.use(cors({
   credentials: true,
 }));
 
-// Conecte-se ao MongoDB
+// Conexão ao MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@erestapi.mckezcw.mongodb.net/?retryWrites=true&w=majority&appName=eRestApi';
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-// Defina um esquema e modelo de usuário
+// Esquema e modelo de usuário
 const userSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   userData: {
@@ -265,13 +265,8 @@ app.get('/users', async (req, res) => {
 // Rota para criar um novo usuário
 app.post('/users', async (req, res) => {
   try {
-    const users = await User.find();
-    const newUser = req.body;
-    newUser.id = users.length ? users[users.length - 1].id + 1 : 1;
-
-    const user = new User(newUser);
-    await user.save();
-
+    const newUser = new User(req.body);
+    await newUser.save();
     res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ message: 'Error creating user' });
@@ -280,14 +275,13 @@ app.post('/users', async (req, res) => {
 
 // Rota para atualizar um usuário existente
 app.put('/users/:id', async (req, res) => {
-  const userId = parseInt(req.params.id, 10);
-  const updatedUser = req.body;
+  const userId = req.params.id;
 
   try {
-    const user = await User.findOneAndUpdate({ id: userId }, updatedUser, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
 
-    if (user) {
-      res.json(user);
+    if (updatedUser) {
+      res.json(updatedUser);
     } else {
       res.status(404).send({ message: 'User not found' });
     }
@@ -298,12 +292,12 @@ app.put('/users/:id', async (req, res) => {
 
 // Rota para deletar um usuário
 app.delete('/users/:id', async (req, res) => {
-  const userId = parseInt(req.params.id, 10);
+  const userId = req.params.id;
 
   try {
-    const user = await User.findOneAndDelete({ id: userId });
+    const deletedUser = await User.findByIdAndDelete(userId);
 
-    if (user) {
+    if (deletedUser) {
       res.status(200).send({ message: 'User deleted successfully' });
     } else {
       res.status(404).send({ message: 'User not found' });
@@ -322,7 +316,6 @@ app.delete('/users', async (req, res) => {
     res.status(500).json({ message: 'Error deleting all users' });
   }
 });
-
 
 // Função de verificação de senha (exemplo simples)
 const verifyPassword = (password) => {
