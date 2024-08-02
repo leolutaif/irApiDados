@@ -20,7 +20,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Defina um esquema e modelo de usuário
 const userSchema = new mongoose.Schema({
-  id: Date,
+  id: Date.now,
   timestamp: { type: Date, default: Date.now },
   userData: {
     nomeCompleto: String,
