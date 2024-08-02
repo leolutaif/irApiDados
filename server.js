@@ -242,7 +242,7 @@ const userSchema = new mongoose.Schema({
     finalTresCorrigido: Number,
     finalQuatroCorrigido: Number,
     finalCincoCorrigido: Number,
-  },
+  }
 });
 
 const User = mongoose.model('User', userSchema);
@@ -305,6 +305,16 @@ app.delete('/users/:id', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: 'Error deleting user' });
+  }
+});
+
+// Rota para deletar todos os usuários (use com cuidado)
+app.delete('/users', async (req, res) => {
+  try {
+    await User.deleteMany({});
+    res.status(200).send({ message: 'All users deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting all users' });
   }
 });
 
