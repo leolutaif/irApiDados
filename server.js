@@ -6,7 +6,21 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
-app.use(cors());
+
+// Configure CORS
+const allowedOrigins = ['http://localhost:3000'];
+app.use(cors({
+  origin: (origin, callback) => {
+    // Permite solicitações sem origem (como Postman ou cURL)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Se você estiver usando cookies ou autenticação baseada em sessão
+}));
 
 // Conecte-se ao MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@e-rest-data-base.dnjy5kn.mongodb.net/?retryWrites=true&w=majority&appName=E-Rest-Data-Base';
