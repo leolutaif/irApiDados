@@ -13,7 +13,7 @@ app.use(cors({
 }));
 
 // Conecte-se ao MongoDB
-const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@e-rest-data-base.dnjy5kn.mongodb.net/?retryWrites=true&w=majority&appName=E-Rest-Data-Base';
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@erestapi.50qnx47.mongodb.net/?retryWrites=true&w=majority&appName=eRestApi';
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
@@ -317,6 +317,7 @@ app.delete('/users', async (req, res) => {
     res.status(500).json({ message: 'Error deleting all users' });
   }
 });
+
 
 // Função de verificação de senha (exemplo simples)
 const verifyPassword = (password) => {
