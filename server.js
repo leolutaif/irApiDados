@@ -8,9 +8,12 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 // Configure CORS para aceitar qualquer origem
+const cors = require('cors');
+
+// Configurar CORS para aceitar várias origens
 app.use(cors({
-  origin: 'http://localhost:3000', // Permitir somente a origem da porta 3000
-  credentials: true, // Permitir credenciais (cookies, cabeçalhos de autenticação, etc.)
+  origin: ['http://localhost:3000', 'http://localhost:3001'], // Permitir as origens necessárias
+  credentials: true,
 }));
 
 // Conecte-se ao MongoDB
