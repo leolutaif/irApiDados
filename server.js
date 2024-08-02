@@ -9,10 +9,8 @@ app.use(bodyParser.json());
 
 // Configure CORS para aceitar qualquer origem
 const cors = require('cors');
-
-// Configurar CORS para aceitar várias origens
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'], // Permitir as origens necessárias
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true,
 }));
 
