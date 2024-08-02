@@ -5,13 +5,12 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware para analisar o corpo das solicitações em JSON
 app.use(bodyParser.json());
 
-// Configuração do CORS para permitir todas as origens
+// Configure CORS
 app.use(cors({
-  origin: '*', // Permitir todas as origens
-  credentials: true, // Se você estiver usando cookies ou autenticação baseada em sessão
+  origin: 'http://localhost:3001', // Especifique a origem permitida
+  credentials: true, // Permitir credenciais (cookies, cabeçalhos de autenticação, etc.)
 }));
 
 // Conecte-se ao MongoDB
