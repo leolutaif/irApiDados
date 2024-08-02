@@ -7,9 +7,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
-// Configure CORS
+// Configure CORS para aceitar qualquer origem
 app.use(cors({
-  origin: 'http://localhost:3001', // Especifique a origem permitida
+  origin: '*', // Aceita qualquer origem
   credentials: true, // Permitir credenciais (cookies, cabeçalhos de autenticação, etc.)
 }));
 
