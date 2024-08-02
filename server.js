@@ -1,67 +1,64 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const fs = require('fs');
+const mongoose = require('mongoose');
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 app.use(cors());
 
-const getUsers = () => {
-  const data = fs.readFileSync('db.json');
-  return JSON.parse(data).users;
-};
+// Conecte-se ao MongoDB
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@e-rest-data-base.dnjy5kn.mongodb.net/?retryWrites=true&w=majority&appName=E-Rest-Data-Base';
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-const saveUsers = (users) => {
-  const data = { users };
-  fs.writeFileSync('db.json', JSON.stringify(data, null, 2));
-};
+// Defina um esquema e modelo de usuário
+const userSchema = new mongoose.Schema({
+  id: Number,
+  name: String,
+  email: String,
+  // Adicione outros campos conforme necessário
+});
 
-// Simulação de verificação de senha (você pode implementar sua lógica de autenticação aqui)
-const verifyPassword = (password) => {
-  // Substitua 'your-secret-password' pela senha real
-  const correctPassword = 'your-secret-password';
-  return password === correctPassword;
-};
+const User = mongoose.model('User', userSchema);
 
-app.get('/users', (req, res) => {
-  const users = getUsers();
+app.get('/users', async (req, res) => {
+  const users = await User.find();
   res.json(users);
 });
 
-app.post('/users', (req, res) => {
-  const users = getUsers();
+app.post('/users', async (req, res) => {
+  const users = await User.find();
   const newUser = req.body;
   newUser.id = users.length ? users[users.length - 1].id + 1 : 1;
-  users.push(newUser);
-  saveUsers(users);
+  
+  const user = new User(newUser);
+  await user.save();
+  
   res.status(201).json(newUser);
 });
 
-app.put('/users/:id', (req, res) => {
+app.put('/users/:id', async (req, res) => {
   const userId = parseInt(req.params.id, 10);
   const updatedUser = req.body;
-  let users = getUsers();
 
-  const userIndex = users.findIndex(user => user.id === userId);
-  if (userIndex !== -1) {
-    users[userIndex] = updatedUser;
-    saveUsers(users);
-    res.json(updatedUser);
+  const user = await User.findOneAndUpdate({ id: userId }, updatedUser, { new: true });
+  
+  if (user) {
+    res.json(user);
   } else {
     res.status(404).send({ message: 'User not found' });
   }
 });
 
-app.delete('/users/:id', (req, res) => {
+app.delete('/users/:id', async (req, res) => {
   const userId = parseInt(req.params.id, 10);
-  let users = getUsers();
 
-  const userIndex = users.findIndex(user => user.id === userId);
-  if (userIndex !== -1) {
-    users.splice(userIndex, 1);
-    saveUsers(users);
+  const user = await User.findOneAndDelete({ id: userId });
+  
+  if (user) {
     res.status(200).send({ message: 'User deleted successfully' });
   } else {
     res.status(404).send({ message: 'User not found' });
