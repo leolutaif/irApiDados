@@ -24,6 +24,15 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: String,
   createdAt: { type: Date, default: Date.now },
+  userData: {
+    nomeCompleto: String,
+    telefone: String,
+    cpf: String,
+    dataNascimento: Date,
+  },
+  processData: {
+    numeroProcesso: String,
+  },
   // Adicione outros campos conforme necessário
 });
 
@@ -36,6 +45,22 @@ app.get('/users', async (req, res) => {
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: 'Error fetching users' });
+  }
+});
+
+// Rota para obter um usuário específico pelo ID
+app.get('/users/:id', async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+
+  try {
+    const user = await User.findOne({ id: userId });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching user' });
   }
 });
 
