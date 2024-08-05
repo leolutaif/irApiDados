@@ -20,6 +20,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+
 // Esquema e modelo de usuário
 const userSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
