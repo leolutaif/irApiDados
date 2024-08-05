@@ -3,12 +3,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(bodyParser.json());
+
 app.use(cors({
-  origin: '*', // Permite todas as origens
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://e-restituicao.netlify.app', 'https://dashboard-e-restituicao.netlify.app/home', 'https://dashboard-e-restituicao.netlify.app/'],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
 // Conexão ao MongoDB
