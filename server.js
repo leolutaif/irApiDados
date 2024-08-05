@@ -14,6 +14,8 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
+header('Access-Control-Allow-Origin: https://dashboard-e-restituicao.netlify.app')
+
 
 // Conexão ao MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@erestapi.mckezcw.mongodb.net/?retryWrites=true&w=majority&appName=eRestApi';
