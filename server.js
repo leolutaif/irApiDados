@@ -9,20 +9,22 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://e-restituicao.netlify.app', 'https://dashboard-e-restituicao.netlify.app/home', 'https://dashboard-e-restituicao.netlify.app/'],
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://e-restituicao.netlify.app',
+    'https://dashboard-e-restituicao.netlify.app/home',
+    'https://dashboard-e-restituicao.netlify.app'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
-
-header('Access-Control-Allow-Origin: https://dashboard-e-restituicao.netlify.app')
-
 
 // Conexão ao MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@erestapi.mckezcw.mongodb.net/?retryWrites=true&w=majority&appName=eRestApi';
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
-
 
 // Esquema e modelo de usuário
 const userSchema = new mongoose.Schema({
