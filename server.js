@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['https://e-restituicao.netlify.app/', 'https://dashboard-e-restituicao.netlify.app/'],
   credentials: true,
 }));
 
