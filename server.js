@@ -247,6 +247,18 @@ const userSchema = new mongoose.Schema({
   },
   paymentData: {
     assinatura: String,
+  },
+  pdfData: {
+    pdfData1: String,
+    pdfData2: String,
+    pdfData3: String,
+    pdfData4: String,
+    pdfData5: String,
+    pdfEsc1: String,
+    pdfEsc2: String,
+    pdfEsc3: String,
+    pdfEsc4: String,
+    pdfEsc5: String,
   }
 });
 
