@@ -14,6 +14,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
+
 // Conexão ao MongoDB
 const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://leofreitaslutaif:J7XIvuHB4imV8USj@erestapi.mckezcw.mongodb.net/?retryWrites=true&w=majority&appName=eRestApi';
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
