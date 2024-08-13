@@ -30,6 +30,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 const userSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   userData: {
+    idApp: String,
     nomeCompleto: String,
     email: String,
     telefone: String,
