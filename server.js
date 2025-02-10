@@ -14,7 +14,8 @@ app.use(cors({
     'http://localhost:3001',
     'https://e-restituicao.netlify.app',
     'https://dashboard-e-restituicao.netlify.app/home',
-    'https://dashboard-e-restituicao.netlify.app'
+    'https://dashboard-e-restituicao.netlify.app',
+    'https://restituicaoia.com.br'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
